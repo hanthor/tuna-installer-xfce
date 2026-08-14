@@ -51,7 +51,7 @@ jobs:
           skopeo copy oci:tuna-installer-xfce.oci docker://ghcr.io/tuna-os/tuna-installer-xfce:latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Update central index (tuna-os/docs)
+      - name: Clone index repo
         env:
           FLATPAK_INDEX_TOKEN: ${{ secrets.FLATPAK_INDEX_TOKEN }}
         run: |
@@ -62,12 +62,22 @@ jobs:
           # (avoids leaks via .git/config, `git remote -v`, and process listings).
           git -C index-repo config --local http.extraheader \
             "AUTHORIZATION: basic $(printf 'x-access-token:%s' "$FLATPAK_INDEX_TOKEN" | base64)"
-          pip install requests
-          python3 .github/scripts/update-index.py \
-            --oci-dir tuna-installer-xfce.oci \
-            --index-file index-repo/static/flatpak/index/static \
-            --repo-name tuna-os/tuna-installer-xfce \
-            --tags latest
+
+      # Canonical, single-source update-index.py (tuna-os/tunaos#1183) instead
+      # of this repo's own byte-copy -- see tuna-os/.github#18. Same script,
+      # same CLI, just hosted once; the weekly drift-check in tuna-os/.github
+      # verifies repos still carrying a local copy stay byte-identical to
+      # this until they migrate.
+      - name: Update central index
+        uses: tuna-os/.github/.github/actions/update-flatpak-index@main
+        with:
+          oci-dir: tuna-installer-xfce.oci
+          index-file: index-repo/static/flatpak/index/static
+          repo-name: tuna-os/tuna-installer-xfce
+          tags: latest
+
+      - name: Push index changes
+        run: |
           cd index-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
