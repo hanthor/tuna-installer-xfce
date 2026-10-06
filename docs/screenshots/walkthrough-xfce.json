@@ -84,78 +84,80 @@
       "name": "welcome",
       "png": "docs/screenshots/01-welcome.png",
       "rendered": true,
-      "colours": 229,
+      "colours": 230,
       "ink": 0.011494252873563218,
-      "stddev": 0.07299736223082047
+      "stddev": 0.07299814419405236
     },
     {
       "name": "source",
       "png": "docs/screenshots/02-source.png",
       "rendered": true,
-      "colours": 278,
+      "colours": 275,
       "ink": 0.010070899129874316,
-      "stddev": 0.06583128402388375
+      "stddev": 0.06583205852672426
     },
     {
       "name": "destination",
       "png": "docs/screenshots/03-destination.png",
       "rendered": true,
-      "colours": 297,
-      "ink": 0.01307874100333011,
-      "stddev": 0.07563467940740293
+      "colours": 278,
+      "ink": 0.013374154044473091,
+      "stddev": 0.07693256386909605
     },
     {
       "name": "setup",
       "png": "docs/screenshots/04-setup.png",
       "rendered": true,
-      "colours": 296,
-      "ink": 0.009453217316575358,
-      "stddev": 0.0656330884258133
+      "colours": 288,
+      "ink": 0.009157804275432377,
+      "stddev": 0.06474149090129888
     },
     {
       "name": "identity",
       "png": "docs/screenshots/05-identity.png",
       "rendered": true,
-      "colours": 230,
-      "ink": 0.0066870770222365455,
-      "stddev": 0.05731446305999247
+      "colours": 217,
+      "ink": 0.006445375443119562,
+      "stddev": 0.05661212444352665
     },
     {
       "name": "confirm",
       "png": "docs/screenshots/06-confirm.png",
       "rendered": true,
-      "colours": 299,
-      "ink": 0.014072403050811044,
-      "stddev": 0.07514081874278977
+      "colours": 265,
+      "ink": 0.014314104629928026,
+      "stddev": 0.07628071394425803
     },
     {
       "name": "progress",
       "png": "docs/screenshots/07-progress.png",
       "rendered": true,
-      "colours": 302,
+      "colours": 301,
       "ink": 0.0352347190890536,
-      "stddev": 0.14620598419176925
+      "stddev": 0.14620655160270776
     },
     {
       "name": "done",
       "png": "docs/screenshots/08-done.png",
       "rendered": true,
-      "colours": 194,
+      "colours": 197,
       "ink": 0.006901922870340531,
-      "stddev": 0.0611523850446799
+      "stddev": 0.061245670178639786
     }
   ],
   "transition_pixels": [
-    9468,
-    9280,
-    10335,
-    10198,
-    12231,
-    19642,
-    23221
+    9105,
+    8915,
+    10505,
+    9883,
+    11734,
+    19021,
+    21551
   ],
   "spec_drift": [
-    "'install' keywords differ from upstream"
+    "'disk' keywords differ from upstream",
+    "'install' keywords differ from upstream",
+    "'welcome' keywords differ from upstream"
   ],
   "notes": "GPU-less capture: pages are driven programmatically and text is read from the widget tree, so this reports SCREEN PARITY only. It does not measure keyboard navigation, compositor rendering, or that the frontend launches under its real desktop \u2014 those stay the VM walkthrough's job."
 }
