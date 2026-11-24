@@ -15,7 +15,7 @@ Classic GTK3/PyGObject wizard that drives the
 [fisherman](https://github.com/projectbluefin/fisherman) bootc install
 backend. The plainest of the TunaOS installer frontends by design — see
 `DESIGN.md` (the trawl line is the entire brand budget) and the shared
-contract in `../INSTALLER-FRONTENDS.md`.
+[installer frontend contract](https://github.com/tuna-os/tunaos/blob/main/docs/INSTALLER-FRONTENDS.md).
 
 ## Flow
 
@@ -34,12 +34,33 @@ the recipe installs the running system) and probes embedded OCI stores
 # Dependencies (Fedora)
 sudo dnf install -y python3-gobject gtk3
 
-./tuna-installer-xfce
+TUNA_INSTALLER_DRY_RUN=1 ./tuna-installer-xfce
 ```
 
-Outside a Flatpak it invokes `sudo /usr/local/bin/fisherman`; inside it uses
-`pkexec /app/bin/fisherman` (polkit action `org.tunaos.Installer.install`
-must be installed on the host by the ISO build).
+> **Always set `TUNA_INSTALLER_DRY_RUN=1` when developing.** Reaching the
+> progress page starts the install immediately, with no further confirmation,
+> and that partitions the selected disk. With the variable set (any non-empty
+> value other than `0`) the wizard behaves normally but never launches
+> fisherman: the progress page plays a canned transcript and completes.
+
+Outside a Flatpak a real install invokes `sudo /usr/local/bin/fisherman`.
+Inside a Flatpak it runs `flatpak-spawn --host pkexec /usr/local/bin/fisherman`,
+so the host must provide that path (the live ISO symlinks the bundled
+fisherman there) and the polkit action `org.tunaos.Installer.install`
+(installed by the ISO build).
+
+## Tests
+
+The unit tests cover `core.py` and `readiness.py`, need no GTK and run
+headlessly:
+
+```bash
+python3 -m pip install pytest
+python3 -m pytest tests
+```
+
+The screenshot capture (`tests/gui/capture-screens.py`) needs GTK3 and Xvfb;
+see [docs/gui-walkthrough.md](docs/gui-walkthrough.md#regenerating-these).
 
 ## Flatpak
 
