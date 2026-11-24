@@ -13,7 +13,7 @@ from gi.repository import GLib, Gtk, Pango
 from . import core, readiness
 from .trawlline import TrawlLine
 
-HOSTNAME_RE = re.compile(r"^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$")
+HOSTNAME_RE = core.HOSTNAME_RE
 
 PIPELINE_STEPS = [
     "Partitioning disk", "Formatting boot partitions", "Setting up encryption",

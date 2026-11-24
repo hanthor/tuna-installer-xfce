@@ -3,11 +3,14 @@ recipe emission, and fisherman invocation. See ../INSTALLER-FRONTENDS.md."""
 
 import json
 import os
+import re
 import shlex
 import subprocess
 import tempfile
 
 IN_FLATPAK = os.path.exists("/.flatpak-info")
+
+HOSTNAME_RE = re.compile(r"^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\Z")
 
 # Dry run: the wizard behaves normally but NEVER launches fisherman.
 #
