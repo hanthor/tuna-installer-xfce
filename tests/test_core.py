@@ -195,3 +195,15 @@ class TestFisherman:
     def test_shell_quotes_spaces(self):
         cmd = core.fisherman_shell("/path with spaces/recipe.json")
         assert "'/path with spaces/recipe.json'" in cmd
+
+
+class TestHostnameRe:
+    @pytest.mark.parametrize("name", ["tunaos", "a", "tuna-1", "A1-b2"])
+    def test_accepts_valid_hostnames(self, name):
+        assert core.HOSTNAME_RE.match(name)
+
+    @pytest.mark.parametrize("name", ["", "-tuna", "tuna-", "tu na", "tuna.local", "tuna\n", "tuna\n\n"])
+    def test_rejects_invalid_hostnames(self, name):
+        # `$` alone would also accept a trailing newline; the value is written
+        # into the install recipe, so "tuna\n" must be refused.
+        assert core.HOSTNAME_RE.match(name) is None
